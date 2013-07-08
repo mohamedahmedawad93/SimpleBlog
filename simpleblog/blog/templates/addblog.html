@@ -1,0 +1,8 @@
+{% extends "MainBase.html" %}
+	{% block content %}
+		<form action="/add_blog/" method="GET">
+			<label>Name: </label><br>
+			<input class="option"  id="name" name="name" type="text" weight="5">
+			<button onclick="addblog()"></button>
+		</form>
+	{% endblock %}

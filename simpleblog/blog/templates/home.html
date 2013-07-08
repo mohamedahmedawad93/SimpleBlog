@@ -1,0 +1,28 @@
+{{extends "MainBase.html"}}
+{% block content %}
+	{% if LoginError %}
+		<h1>In correct password or email</h1>
+	{% else %}
+	{% if posts %}
+		{% for post in posts %}
+			<h1><a href="../showpost?post_id={{post.id}}">{{post.title}}</a></h1>
+		{% endfor %}
+		<button onclick="addpost()">add new post</button>
+	{% else %}
+		{% if  none %}
+			<h1>{{none}}</h1>
+			<button onclick="addblog()">Add blog</button>
+		{% else %}
+			<button onclick="addpost()">add new post</button>
+		{% endif %}
+	{% endif %}
+	{% endif %}
+	<script type="text/javascript">
+		function addblog () {
+			window.location.replace("../add_blog_view");
+		}
+		function addpost () {
+			window.location.replace("../add_post_view");
+		}
+	</script>
+{% endblock %}

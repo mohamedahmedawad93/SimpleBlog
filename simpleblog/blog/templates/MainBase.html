@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title></title>
+        {% load staticfiles %}
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}" ></script>
+        <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.masonry.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jq.js" %}"></script>
+        <!-- <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen"> -->
+        <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
+        <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
+        <!-- <link href="{% static "css/font-awesome.css" %}" rel="stylesheet"> -->
+        <!-- <link href="{% static "css/zocial.css" %}" rel="stylesheet"> -->
+        <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" /> -->
+
+
+        {% block headers %}
+        {% endblock %}
+        <style type="text/css">
+            body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+            }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" >
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" style="font-size:30; color:#2795F5" href="../main">Blog</a>
+                    {% block nav %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

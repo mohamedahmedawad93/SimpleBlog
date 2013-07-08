@@ -1,0 +1,3 @@
+import datetime
+u1=MyUser(email='1@3.com',date_of_birth=datetime.datetime.now())
+u2=MyUser(email='2@3.com',date_of_birth=datetime.datetime.now())

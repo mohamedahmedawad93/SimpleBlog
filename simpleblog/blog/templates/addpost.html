@@ -1,0 +1,8 @@
+{% extends "MainBase.html" %}
+	{% block content %}
+		<form action = "/add_post" method="GET">
+			<label>Title</label><input class="option"  id="title" name="title" type="text" weight="5"><br>
+			<label>Content</label><br><textarea rows="15" columns ="30" id="cont" name="description"></textarea><br>
+			<button >add post</button>
+		</form>
+	{% endblock %}
