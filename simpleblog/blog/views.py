@@ -5,6 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib import auth
 import datetime
+from django.template import RequestContext
+from django.contrib.auth import login as django_login
 
 def showpost(request):
 	p_id = request.GET['post_id']

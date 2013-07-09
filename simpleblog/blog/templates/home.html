@@ -1,8 +1,11 @@
-{{extends "MainBase.html"}}
+{% extends "MainBase.html" %}
 {% block content %}
 	{% if LoginError %}
 		<h1>In correct password or email</h1>
 	{% else %}
+	<center>
+		<h1>{{request.user.name}}</h1>
+	</center>
 	{% if posts %}
 		{% for post in posts %}
 			<h1><a href="../showpost?post_id={{post.id}}">{{post.title}}</a></h1>
