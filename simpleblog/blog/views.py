@@ -4,11 +4,12 @@ from django.shortcuts import render_to_response, redirect, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib import auth
+import datetime
 
 def showpost(request):
 	p_id = request.GET['post_id']
 	post = Post.objects.get(id = p_id)
-	comments = Comment.objects.filter(post = post).reverse()
+	comments = Comment.objects.filter(post = post).order_by('date').reverse()
 	return render(request, 'showpost.html', {'post': post, 'comments': comments, 'request': request})
 
 def home(request):
@@ -18,7 +19,7 @@ def add_comment(request, post_id):
 	user = request.user
 	content = request.GET['content']
 	post = Post.objects.get(pk = post_id)
-	Comment.objects.create(commentor = user, content = content, post = post)
+	Comment.objects.create(commentor = user, content = content, post = post, date = datetime.datetime.now())
 	return HttpResponseRedirect("/showpost?post_id="+str(post_id))
 
 def add_blog(request):
@@ -34,7 +35,7 @@ def add_post_view(request):
 def add_post(request):
 	try:
 		blog = Blog.objects.get(owner = request.user)
-		Post.objects.create(blog = blog, description = request.GET['description'], title = request.GET['title'])
+		Post.objects.create(blog = blog, description = request.GET['description'], title = request.GET['title'], date=datetime.datetime.now())
 		return HttpResponseRedirect("/profile?user_id="+str(request.user.id))
 	except:
 		return HttpResponseRedirect("/profile?user_id="+str(request.user.id))
@@ -67,3 +68,7 @@ def view_profile(request):
 		return render(request, 'home.html',{'posts': posts})
 	except:
 		return render(request, 'home.html',{'none': "You have no blogs"})
+
+def main(request):
+	all_posts = Post.objects.all().order_by('date').reverse()
+	return render(request, 'main.html', {'all_posts': all_posts})

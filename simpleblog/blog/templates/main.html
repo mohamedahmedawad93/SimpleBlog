@@ -1,0 +1,8 @@
+{% extends "MainBase.html" %}
+	{% block content %}
+		{% if all_posts %}
+			{% for post in all_posts %}
+				<a href="../showpost?post_id={{post.id}}"><h2>{{post.title}}</h2></a>
+			{% endfor %}
+		{% endif %}
+	{% endblock %}

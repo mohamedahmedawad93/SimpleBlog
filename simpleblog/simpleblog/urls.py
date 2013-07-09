@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^add_blog/$', 'blog.views.add_blog'),
     url(r'^add_blog_view/$', 'blog.views.add_blog_view'),
     url(r'^addcomment/(?P<post_id>\d+)/$', 'blog.views.add_comment'),
+    url(r'^main/$', 'blog.views.main'),
     # url(r'^simpleblog/', include('simpleblog.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

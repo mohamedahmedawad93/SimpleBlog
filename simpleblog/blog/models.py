@@ -88,9 +88,11 @@ class Post(models.Model):
 	blog = models.ForeignKey(Blog)
 	title = models.CharField(max_length='1000')
 	description = models.CharField(max_length = "5000")
+	date = models.DateTimeField()
 	
 
 class Comment(models.Model):
 	content = models.CharField(max_length = "200")
 	post = models.ForeignKey(Post)
 	commentor = models.ForeignKey(MyUser)
+	date = models.DateTimeField()
