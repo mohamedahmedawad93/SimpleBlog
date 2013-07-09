@@ -31,6 +31,7 @@
                 <div class="container">
                     <a class="brand" style="font-size:30; color:#2795F5" href="../main">Blog</a>
                     {% block nav %}
+                    <a href="../profile?user_id={{request.user.id}}">{{request.user.name}}</a>
                     {% endblock %}
                 </div>
             </div>

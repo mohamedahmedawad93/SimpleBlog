@@ -10,13 +10,19 @@
 		{% for post in posts %}
 			<h1><a href="../showpost?post_id={{post.id}}">{{post.title}}</a></h1>
 		{% endfor %}
+		{% ifequal request.user user %}
 		<button onclick="addpost()">add new post</button>
+		{% endifequal %}
 	{% else %}
 		{% if  none %}
 			<h1>{{none}}</h1>
+			{% ifequal request.user user %}
 			<button onclick="addblog()">Add blog</button>
+			{% endifequal %}
 		{% else %}
+			{% ifequal request.user user %}
 			<button onclick="addpost()">add new post</button>
+			{% endifequal %}
 		{% endif %}
 	{% endif %}
 	{% endif %}

@@ -63,11 +63,15 @@ def delete_post(request):
 
 
 def view_profile(request):
-	user = request.user
+	user = request.GET['user_id']
 	try:
 		blog = Blog.objects.get(owner = user)
+		print "here"
+		print blog
 		posts = Post.objects.filter(blog = blog)
-		return render(request, 'home.html',{'posts': posts})
+		print "again"
+		print posts
+		return render(request, 'home.html',{'posts': posts, 'user': user})
 	except:
 		return render(request, 'home.html',{'none': "You have no blogs"})
 
