@@ -38,7 +38,6 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
-	name = models.CharField(max_length=40)
 	email = models.EmailField(
 		verbose_name='email address',
 		max_length=255,
@@ -46,9 +45,10 @@ class MyUser(AbstractBaseUser):
 		db_index=True,
 	)
 	date_of_birth = models.DateField()
+	name = models.CharField(max_length="40")
 	is_active = models.BooleanField(default=True)
 	is_admin = models.BooleanField(default=False)
-
+	friends = models.ManyToManyField ("self")
 	objects = MyUserManager()
 
 	USERNAME_FIELD = 'email'

@@ -1,8 +1,10 @@
 {% extends "MainBase.html" %}
 	{% block content %}
+		<center>
 		{% if all_posts %}
 			{% for post in all_posts %}
-				<a href="../showpost?post_id={{post.id}}"><h2>{{post.title}}</h2></a>
+				<a href="../showpost?post_id={{post.id}}"><h2>{{post.title}} by <a href="../profile?user_id={{post.blog.owner.id}}">{{post.blog.owner.email}}</a></h2></a>
 			{% endfor %}
 		{% endif %}
+	</center>
 	{% endblock %}

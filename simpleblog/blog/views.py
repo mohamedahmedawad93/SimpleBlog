@@ -59,22 +59,26 @@ def login(request):
 
 def delete_post(request):
 	Post.objects.get(pk = request.GET['post_id']).delete()
-	return HttpResponseRedirect("/profile?user_id="+str(request.user.id))
-
+	return HttpResponseRedirect("/main")
 
 def view_profile(request):
-	user = request.GET['user_id']
+	user = MyUser.objects.get(pk = request.GET['user_id'])
 	try:
 		blog = Blog.objects.get(owner = user)
-		print "here"
-		print blog
 		posts = Post.objects.filter(blog = blog)
-		print "again"
-		print posts
-		return render(request, 'home.html',{'posts': posts, 'user': user})
+		return render(request, 'home.html',{'posts': posts, 'user': user, 'request': request})
 	except:
-		return render(request, 'home.html',{'none': "You have no blogs"})
+		return render(request, 'home.html',{'none': "You have no blogs", 'user': user, 'request': request})
 
 def main(request):
 	all_posts = Post.objects.all().order_by('date').reverse()
 	return render(request, 'main.html', {'all_posts': all_posts})
+
+def edit_post(request):
+	description = request.GET['description']
+	title = request.GET['title']
+	post = Post.objects.get(pk = request.GET['id'])
+	post.description = description
+	post.title = title
+	post.save()
+	return render(request, 'showpost.html', {'post': post})

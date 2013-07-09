@@ -2,8 +2,25 @@
 	{% block content %}
 		<center>
 			<div style="margin-left:100px; margin-right:100px;">
-				<h1>{{post.title}} by {{post.blog.owner.name}}</h1><br>
-				<h3>{{post.description}}</h3>
+				<div>	
+					<h1 id="title" value="{{post.title}}">{{post.title}} </h1><h1>by <a href="../profile?user_id={{post.blog.owner.id}}">{{post.blog.owner.email}}</a></h1>
+					<input id="title_new" style="display: none"><br>
+					<h3 id="content" value="{{post.description}}">{{post.description}}</h3>
+					<textarea id="content_new" rows="15" columns ="30" style="display:none"></textarea>
+				</div>
+				<button id="edit" onclick="edit()">edit post</button>
+				<form action="/delete_post/" method="GET">
+					<button id="delete" value="{{post.id}}" name="post_id" onclick="delete(this)">delete post</button>
+				</form>
+				<button id="editaction" value="{{post.id}}" onclick="editaction(this)" style="display:none">save</button><br><br>
+				<a href="https://www.facebook.com/dialog/feed?app_id=461240817281750&link=http://127.0.0.1:8000/showpost/?post_id={{post.id}}&name=http://127.0.0.1:8000/showpost/?post_id={{post.id}}&caption=Reference%20Documentation&description=Using%20Dialogs%20to%20interact%20with%20users.&redirect_uri=https://peaceful-lake-7793.herokuapp.com" target="_blank">
+  				share to facebook
+  				</a>
+				<a href="http://twitter.com/home?status=Your%20message%20here:%20http://127.0.0.1:8000/showpost/?post_id={{post.id}}" target="_blank">
+				share to twitter
+  				</a>
+				<a href="https://plus.google.com/share?url=http://127.0.0.1:8000/showpost/?post_id={{post.id}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+				share to google+</a>
 				<hr>
 			</div>
 			<div>
@@ -16,7 +33,7 @@
 						            <div class ="commentName"  class="text-info" style="width:100%;">
 						              .
 						              <a href="../profile/?user_id={{comment.commentor.id}} ">
-						                &nbsp;by {{ comment.commentor.name }}&nbsp;
+						                &nbsp;by {{ comment.commentor.email }}&nbsp;
 						                <i class="icon-user">
 						                </i>
 						              </a>
@@ -35,7 +52,7 @@
 						            <a href="../profile/?user_id={{comment.commentor.id}} ">
 						              <i class="icon-user">
 						              </i>
-						              &nbsp;by {{ comment.commentor.name }}&nbsp;
+						              &nbsp;by {{ comment.commentor.email }}&nbsp;
 						            </a>
 						            .
 						          </div>
@@ -54,4 +71,44 @@
 				</form>
 			</div>
 		</center>
+		<script type="text/javascript">
+			function edit (elem) {
+				var title = $('#title').text();
+				var content = $('#content').text();
+				$('#title').fadeOut();
+  				$('#content').fadeOut();
+  				$('#edit').fadeOut();
+  				$('#delete').fadeOut();
+  				document.getElementById("title_new").value = title;
+  				document.getElementById("content_new").value = content;
+  				$('#title_new').fadeIn();
+  				$('#content_new').fadeIn();
+  				$('#editaction').fadeIn();
+			}
+			function editaction (elem) {
+				var title = document.getElementById("title_new").value
+  				var content = document.getElementById("content_new").value
+  				var id = elem.value;
+  				$.ajax({
+    				url: "/edit_post/",
+    				type: "GET",
+    				data: {
+    					"title" : title,
+    					"description" : content,
+    					"id" : id,
+    				}, 
+        			success: function(req) {
+     					$('#title').replaceWith($(req).find('#title'));
+     					$('#content').replaceWith($(req).find('#content'));
+		  				$('#title_new').fadeOut();
+  						$('#content_new').fadeOut();
+  						$('#editaction').fadeOut();
+  						$('#title').fadeIn();
+  						$('#content').fadeIn();
+  						$('#edit').fadeIn();
+  						$('#delete').fadeIn();
+					}
+				});
+			}
+		</script>
 	{% endblock %}

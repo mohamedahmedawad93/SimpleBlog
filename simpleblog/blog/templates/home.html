@@ -1,31 +1,40 @@
 {% extends "MainBase.html" %}
 {% block content %}
+	<div>
 	{% if LoginError %}
 		<h1>In correct password or email</h1>
 	{% else %}
 	<center>
-		<h1>{{request.user.name}}</h1>
+		<h1>{{request.user.email}}</h1>
 	</center>
 	{% if posts %}
 		{% for post in posts %}
 			<h1><a href="../showpost?post_id={{post.id}}">{{post.title}}</a></h1>
 		{% endfor %}
-		{% ifequal request.user user %}
-		<button onclick="addpost()">add new post</button>
+		{% ifequal request.user.id user.id %}
+			<button onclick="addpost()">add new post</button>
 		{% endifequal %}
 	{% else %}
 		{% if  none %}
 			<h1>{{none}}</h1>
-			{% ifequal request.user user %}
-			<button onclick="addblog()">Add blog</button>
+			{% ifequal request.user.id user.id %}
+				<button onclick="addblog()">Add blog</button>
 			{% endifequal %}
 		{% else %}
-			{% ifequal request.user user %}
-			<button onclick="addpost()">add new post</button>
+			{% ifequal request.user.id user.id %}
+				<button onclick="addpost()">add new post</button>
 			{% endifequal %}
 		{% endif %}
 	{% endif %}
 	{% endif %}
+	</div>
+	<div>
+		{% ifnotequal request.user.id user.id %}
+			{% if can_add %}
+				<button>add friend</button>
+			{% endif %}
+		{% endifnotequal %}
+	</div>
 	<script type="text/javascript">
 		function addblog () {
 			window.location.replace("../add_blog_view");
